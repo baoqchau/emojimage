@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect, render_template, flash
+from flask import Flask, url_for, redirect, render_template, flash, request
 app = Flask(__name__)
 
 import os
@@ -11,17 +11,16 @@ os.environ["CLARIFAI_APP_SECRET"] = "eNfVHLb9prAAqB6T3EVZ2masTeNCisK7dC6wsAKC"
 #create our app
 
 clarifai_api = ClarifaiApi()
-result = clarifai_api.tag_image_urls('http://img10.deviantart.net/2a92/i/2011/161/6/e/sweet_grin_by_sweetgrinplz-d3ilgeq.png')
-#parsed = json.loads(result)
-print json.dumps(result, indent = 4, sort_keys = True)
 
-@app.route('/')
-def index():
+@app.route('/', methods = ["POST", "GET"])
+def show_result():
+    print request.form
+    if "linkImage" in request.form:
+        linkImage = request.form["linkImage"]
+        result = clarifai_api.tag_image_urls(linkImage)
+    else:
+        result = None
     return render_template('index.html', result = result)
 
-@app.route('/result')
-def returnResult():
-    return result
-
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = True)

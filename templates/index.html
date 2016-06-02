@@ -1,11 +1,22 @@
 <!doctype html>
 <title>Flaskr</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 {% block body %}
-    <p> Hello world </p>
+<p> <strong>EmojiMage</strong> </p>
+    <p> This is <b>EmojiMage</b>, a web app that will return the most suitable emoticons
+        for your picture :D </p>
+    <p> Enter the link to the image in the box below to get started </p>
+    <form action="{{ url_for('show_result') }}" method="post" class="add-link">
+        <input type="text" size="30" name="linkImage">
+        <input type="submit" value="click here">
+    </form> 
     <ul>
+    {% if result  %}
+    <p> Top 10 results for your image </p>
     {% for tag in result["results"][0]["result"]["tag"]["classes"] %}
         <li> {{tag}} </li>
     {% endfor %}
+    {% endif %}
     </ul>    
+    <p> This result is provided by Clarifai API at <a href="http://clarifai.com/">Clarifai</a> </p>
 {% endblock %}
