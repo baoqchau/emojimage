@@ -7,11 +7,13 @@
         for your picture :D </p>
     <p> Enter the link to the image in the box below to get started </p>
     <form action="{{ url_for('show_result') }}" method="post" class="add-link">
-        <input type="text" size="30" name="linkImage">
+        <input type="text" size="30" name="linkImage" >
         <input type="submit" value="click here">
     </form> 
     <ul>
     {% if result  %}
+    <p> This is your image </p>
+    <img src="{{linkImage}}">
     <p> Top 10 results for your image </p>
     {% for tag in result["results"][0]["result"]["tag"]["classes"] %}
         <li> {{tag}} </li>

@@ -20,7 +20,8 @@ def show_result():
         result = clarifai_api.tag_image_urls(linkImage)
     else:
         result = None
-    return render_template('index.html', result = result)
+        linkImage = None
+    return render_template('index.html', result = result, linkImage = linkImage)
 
 if __name__ == '__main__':
     app.run(debug = True)
